@@ -14,6 +14,7 @@ export function FieldAddTask() {
     return (
         <input type="text" value={content} placeholder="Adicione uma nova tarefa"
             ref={refNewTask} onChange={(e) => { handleRefNewTask(e.target.value) }}
-            className="rounded-lg w-11/12 p-4 font-bold border-2 text-indigo-900 placeholder:text-indigo-500" />
+            className="rounded-lg w-11/12 p-4 font-bold border-2 text-indigo-900 placeholder:text-indigo-500"
+        />
     )
 }

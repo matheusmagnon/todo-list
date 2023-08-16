@@ -1,11 +1,6 @@
 import { Trash } from "phosphor-react";
 import { TodoListContext, task } from "../context/TodoListContext";
 import { useContext, useRef } from "react";
-// // import ReactComponent from "*.svg"
-// import { ReactComponent as Check } from '../assets/check.svg'
-
-// import { ReactComponent as Checked } from '../assets/checked.svg'
-// // import ReactComponent from '../assets/check.svg'
 
 interface TaskProps {
     task: task;
@@ -31,7 +26,6 @@ export function Task({ task }: TaskProps) {
                     type="checkbox"
                     onChange={() => handleStatusTask(task)
                     }
-                // id="accept"
                 />
                 <span className={task.isCompleted ? 'pl-4 line-through text-gray-400' : 'pl-4'}>
                     {task.content}

@@ -2,9 +2,8 @@ import { PlusCircle } from "phosphor-react";
 import { ReactNode, useContext } from "react";
 import { TodoListContext } from "../context/TodoListContext";
 
-
 export function Buttom() {
-    const { refNewTask, isDisabled, createTask } = useContext(TodoListContext)
+    const { refNewTask, createTask } = useContext(TodoListContext)
 
     const handleAddTask = () => {
         if (refNewTask?.current?.value == '') {

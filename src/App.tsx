@@ -12,9 +12,7 @@ import { Buttom } from './components/Buttom'
 import { FieldAddTask } from './components/FieldAddTask'
 
 function App() {
-  const { tasks, setIsDisabled, content, setContent, refNewTask } = useContext(TodoListContext)
-
-
+  const { tasks } = useContext(TodoListContext)
 
   return (
     <Container>
