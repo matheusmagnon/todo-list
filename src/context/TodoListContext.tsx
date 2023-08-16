@@ -30,28 +30,7 @@ interface TodoListProviderProps {
 export const TodoListContext = createContext({} as TodoListContextType);
 
 export function TodoListProvider({ children }: TodoListProviderProps) {
-    const [tasks, setTasks] = useState<task[]>([
-        {
-            id: uuidv4(),
-            content: "Tarefa teste",
-            isCompleted: false
-        },
-        {
-            id: uuidv4(),
-            content: "Tarefa para fazer depois",
-            isCompleted: true
-        },
-        {
-            id: uuidv4(),
-            content: "Comprar pão",
-            isCompleted: true
-        },
-        {
-            id: uuidv4(),
-            content: "Estudar back-end",
-            isCompleted: true
-        },
-    ])
+    const [tasks, setTasks] = useState<task[]>([])
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
     const [content, setContent] = useState<string>('')
     const refNewTask = useRef<HTMLInputElement | null>(null)
@@ -67,9 +46,16 @@ export function TodoListProvider({ children }: TodoListProviderProps) {
         setIsDisabled(true)
     }
 
-    const changeStatusTask = (task: task) => {
-
+    const changeStatusTask = (taskTochange: task) => {
+        const newTask = tasks.map(task => {
+            if (task.id === taskTochange.id) {
+                return { ...task, isCompleted: !task.isCompleted };
+            }
+            return task;
+        });
+        setTasks(newTask);
     }
+
 
     const deleteTask = (taskToDelete: task) => {
         const tasksWithoutDeleteOne = tasks.filter((task) => {

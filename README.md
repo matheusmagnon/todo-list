@@ -1,27 +1,51 @@
-# React + TypeScript + Vite
+# todo list (Aplicação para gestão de tarefas )
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Capa
 
-Currently, two official plugins are available:
+<img src="./src/assets/Capa.JPG" /> <br/> <br/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Funcionalidades da aplicação
 
-## Expanding the ESLint configuration
+- Cadastrar tarefas
+- Contabilizar total de tarefas
+- Contabilizar tarefas concluídas
+- Marcar tarefa como concluída
+- Excluir tarefas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tecnologias utilizadas
 
-- Configure the top-level `parserOptions` property like this:
+- React
+- Typescript
+- Vite
+- Tailwindcss
+- Context API
+- Phosphor React
+- uuid
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Como executar a aplicação
+
+### Instalação
+
+1. Clone o repositório
+
+```bash
+git clone https://github.com/matheusmagnon/todo-list.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Acesse a pasta do projeto
+
+```bash
+cd todo-list
+```
+
+3. Instale as dependências necessárias
+
+```bash
+npm install
+```
+
+4. Execute o projeto Frontend
+
+```bash
+npm run dev
+```
