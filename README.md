@@ -20,9 +20,8 @@
 - Tailwindcss
 - Context API
 - Phosphor React
-- uuid
-
-## Como executar a aplicação
+- Radix-ui
+- Eslint
 
 ### Instalação
 

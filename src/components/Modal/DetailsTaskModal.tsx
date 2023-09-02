@@ -3,8 +3,10 @@ import { XCircle } from 'phosphor-react';
 import { useContext } from 'react'
 import { task, TodoListContext } from '../../context/TodoListContext';
 
-export function DetailsTaskModal(task: task) {
-    console.log(task);
+interface DetailsTaskProps {
+    task: task;
+}
+export function DetailsTaskModal({ task }: DetailsTaskProps) {
 
     return (
         <Dialog.Portal className="align-middle">
@@ -16,33 +18,16 @@ export function DetailsTaskModal(task: task) {
                         <XCircle size={28} weight="fill" className='text-red-800 font-bold' />
                     </Dialog.Close>
                 </div>
-                <form className='flex flex-col'>
-                    <div className=' flex flex-col space-y-2 '>
+                <div className=' flex flex-col space-y-2 '>
+                    <div>
                         <h3>Titulo da tarefa:</h3>
-                        <p>{task.title}</p>
-                        {/* <input className='placeholder:text-indigo-950 bg-indigo-50 p-1 rounded-md'
-                            type="text"
-                            placeholder="Titulo da tarefa"
-                            required
-                            value={titleTask}
-                            onChange={(e) => { createCurrentTitleTask(e.target.value) }}
-                        /> */}
-
-                        {/* <input className='placeholder:text-indigo-950 bg-indigo-50 p-1 rounded-md'
-                            type="text"
-                            placeholder="Descrição da tarefa"
-                            required
-                            onChange={(e) => { createCurrentDescribeTask(e.target.value) }}
-                        /> */}
+                        <p className='font-bold'>{task.title}</p>
                     </div>
-                    {/* <Dialog.Root> */}
-                    <Dialog.Close >
-                        {/* <button onClick={handleCreateTask} className='mt-4 text-gray-100 bg-green-800 rounded-lg p-2'>
-                            Cadastrar tarefa
-                        </button> */}
-                    </Dialog.Close>
-                    {/* </Dialog.Root> */}
-                </form>
+                    <div>
+                        <h3>Tarefa detalhada:</h3>
+                        <p className='font-bold'>{task.description}</p>
+                    </div>
+                </div>
             </Dialog.Content>
         </Dialog.Portal>
     )

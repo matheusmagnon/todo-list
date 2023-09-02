@@ -1,5 +1,7 @@
 import {
+    Dispatch,
     ReactNode,
+    SetStateAction,
     createContext,
     useState
 } from "react";
@@ -26,6 +28,7 @@ interface TodoListContextType {
     createTask: () => void;
     changeStatusTask: (task: task) => void;
     deleteTask: (taskToDelete: task) => void;
+    setTasks: Dispatch<SetStateAction<task[]>>
 
 }
 interface TodoListProviderProps {
@@ -42,42 +45,44 @@ export function TodoListProvider({ children }: TodoListProviderProps) {
     const createCurrentDescribeTask = (title: string) => setDescribeTask(title)
 
     const getTasks = async () => {
-        const { data } = await api.get(`/tasks`);
-        setTasks(data.reverse());
+        api.get<task[]>(`/tasks`).then((tasks) => {
+            setTasks(tasks.data.reverse())
+        })
+            .catch(error => console.log(error));
     };
 
     const createTask = () => {
         api.post('/tasks', {
             title: titleTask,
             description: describeTask
-        })
-
+        }).then(() => { getTasks() })
+            .catch(error => console.log(error)
+            )
         setTitleTask('')
-        getTasks()
+        setDescribeTask('')
     }
 
     const changeStatusTask = (taskTochange: task) => {
-        // const newTask = tasks.map(task => {
-        //     if (task.id === taskTochange.id) {
-        //         return { ...task, isCompleted: !task.isCompleted };
-        //     }
-        //     return task;
-        // });
-        // setTasks(newTask);
+        const { title, description, isCompleted } = taskTochange
+
+        api.patch<task[]>(`/tasks/${taskTochange.id}`, {
+            title,
+            description,
+            isCompleted: !isCompleted
+        }).then(() => getTasks())
+            .catch(error => console.log(error)
+            )
     }
 
-
     const deleteTask = (taskToDelete: task) => {
-
-        api.delete(`/tasks/${taskToDelete.id}`)
-        // getTasks()
-        // const tasksWithoutDeleteOne = tasks.filter((task) => {
-        //     return task !== taskToDelete;
-        // });
-        // setTasks(tasksWithoutDeleteOne);
+        api.delete<task[]>(`/tasks/${taskToDelete.id}`)
+            .then(() => getTasks()
+                .catch(error => console.log(error))
+            );
     }
     return (
         <TodoListContext.Provider value={{
+            setTasks,
             getTasks,
             titleTask,
             createCurrentTitleTask,

@@ -1,12 +1,25 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { XCircle } from 'phosphor-react';
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { TodoListContext } from '../../context/TodoListContext';
 
 export function NewTaskModal() {
-    const { createCurrentTitleTask, createCurrentDescribeTask, createTask, titleTask } = useContext(TodoListContext)
+    const { createCurrentTitleTask, createCurrentDescribeTask, createTask, titleTask, describeTask } = useContext(TodoListContext)
+    const [isDisabled, setIsDisabled] = useState(true)
 
     const handleCreateTask = () => createTask()
+
+    useEffect(() => {
+        console.log(titleTask.length);
+        console.log(describeTask.length);
+
+        if (titleTask.length == 0 || describeTask.length == 0) {
+            setIsDisabled(true)
+        } else {
+            setIsDisabled(false)
+        }
+
+    }, [titleTask, describeTask])
 
     return (
         <Dialog.Portal className="align-middle">
@@ -32,16 +45,15 @@ export function NewTaskModal() {
                             type="text"
                             placeholder="Descrição da tarefa"
                             required
+                            value={describeTask}
                             onChange={(e) => { createCurrentDescribeTask(e.target.value) }}
                         />
                     </div>
                     {/* <Dialog.Root> */}
-                    <Dialog.Close onClick={handleCreateTask} className='mt-4 text-gray-100 bg-green-800 rounded-lg p-2' >
-                        {/* <button onClick={handleCreateTask} className='mt-4 text-gray-100 bg-green-800 rounded-lg p-2'> */}
-                        Cadastrar tarefa
-                        {/* </button> */}
-                    </Dialog.Close>
-                    {/* </Dialog.Root> */}
+                    <button type="button" onClick={() => handleCreateTask()} disabled={isDisabled} className='disabled:cursor-not-allowed disabled:opacity-60 mt-4 text-gray-100 bg-green-800 rounded-lg w-24 p-2'>
+                        {/* disabled={isSubmitting} */}
+                        Cadastrar
+                    </button>
                 </form>
             </Dialog.Content>
         </Dialog.Portal>

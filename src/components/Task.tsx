@@ -1,9 +1,7 @@
-import { Plus, PlusCircle, Trash } from "phosphor-react";
+import { Trash } from "phosphor-react";
 import { TodoListContext, task } from "../context/TodoListContext";
 import { useContext, useRef } from "react";
-import * as Dialog from '@radix-ui/react-dialog';
-import { NewTaskModal } from "./Modal/NewTaskModal";
-import { DetailsTaskModal } from "./Modal/DetailsTaskModal";
+
 import { SeeMoreButton } from "./SeeMoreButton";
 
 interface TaskProps {
@@ -25,7 +23,7 @@ export function Task({ task }: TaskProps) {
     return (
         <div className='flex items-center justify-between w-full text-indigo-50 rounded-lg p-3 
         bg-indigo-950 break-words'>
-            <div className="flex items-center overflow-x-auto lg:w-auto w-11/12">
+            <div className="flex items-center overflow-x-auto  w-11/12">
                 <input
                     className={task.isCompleted ? checkedTask : unCheckedTask}
                     type="checkbox"
@@ -36,9 +34,9 @@ export function Task({ task }: TaskProps) {
                     {task.title}
                 </p>
             </div>
-            {/* <SeeMoreButton /> */}
+            <SeeMoreButton task={task} />
             <div>
-                <Trash onClick={() => deleteTask(task)} size={25} className='hover:text-red-500 cursor-pointe' />
+                <Trash onClick={() => deleteTask(task)} size={25} className='hover:text-red-500 cursor-pointer ml-6' />
             </div>
         </div>
     )

@@ -4,17 +4,17 @@ import { Header } from './components/Header'
 import { Content } from './components/Content'
 import { Tasks } from './components/Tasks'
 import { Task } from './components/Task'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect } from 'react'
 import { StatusTasks } from './components/StatusTasks'
 import { Button } from './components/Button'
 import { FieldTitleTask } from './components/FieldTitleTask'
 
 function App() {
-  const { tasks, getTasks } = useContext(TodoListContext)
+  const { tasks, getTasks, setTasks } = useContext(TodoListContext)
 
   useEffect(() => {
-    getTasks();
-  }, [tasks])
+    getTasks()
+  }, []);
 
   return (
     <Container>
