@@ -1,6 +1,10 @@
-import { Trash } from "phosphor-react";
+import { Plus, PlusCircle, Trash } from "phosphor-react";
 import { TodoListContext, task } from "../context/TodoListContext";
 import { useContext, useRef } from "react";
+import * as Dialog from '@radix-ui/react-dialog';
+import { NewTaskModal } from "./Modal/NewTaskModal";
+import { DetailsTaskModal } from "./Modal/DetailsTaskModal";
+import { SeeMoreButton } from "./SeeMoreButton";
 
 interface TaskProps {
     task: task;
@@ -29,9 +33,10 @@ export function Task({ task }: TaskProps) {
                     }
                 />
                 <p className={task.isCompleted ? ' pl-4 line-through text-gray-400' : 'pl-4'}>
-                    {task.content}
+                    {task.title}
                 </p>
             </div>
+            {/* <SeeMoreButton /> */}
             <div>
                 <Trash onClick={() => deleteTask(task)} size={25} className='hover:text-red-500 cursor-pointe' />
             </div>

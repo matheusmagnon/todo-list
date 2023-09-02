@@ -11,7 +11,10 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.4",
+    "axios": "^1.5.0",
     "phosphor-react": "^1.4.1",
+    "radix-ui": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "uuid": "^9.0.0"

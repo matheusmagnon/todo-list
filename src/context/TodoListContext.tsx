@@ -1,26 +1,29 @@
 import {
-    Dispatch,
-    LegacyRef,
     ReactNode,
-    SetStateAction,
     createContext,
-    useRef,
     useState
 } from "react";
-import { v4 as uuidv4 } from 'uuid'
+import { api } from '../lib/axios'
 
+interface CreateTaskType {
+    title?: string;
+    describe?: string,
+}
 export interface task {
-    id?: string;
-    content: string | undefined,
-    isCompleted: boolean,
+    title?: string;
+    description?: string | undefined,
+    id?: string
+    isCompleted?: boolean,
 }
 
 interface TodoListContextType {
+    getTasks: () => void
+    createCurrentTitleTask: (title: string) => void;
+    createCurrentDescribeTask: (title: string) => void;
+    describeTask: string
+    titleTask: string
     tasks: task[];
-    createTask: (task: string) => void;
-    content: string | undefined;
-    setContent: Dispatch<SetStateAction<string>>;
-    refNewTask: LegacyRef<HTMLInputElement> | undefined
+    createTask: () => void;
     changeStatusTask: (task: task) => void;
     deleteTask: (taskToDelete: task) => void;
 
@@ -33,42 +36,55 @@ export const TodoListContext = createContext({} as TodoListContextType);
 
 export function TodoListProvider({ children }: TodoListProviderProps) {
     const [tasks, setTasks] = useState<task[]>([])
-    const [content, setContent] = useState<string>('')
-    const refNewTask = useRef<HTMLInputElement | null>(null)
-    const createTask = (contentTask: string) => {
-        const newTask: task = {
-            content: contentTask,
-            id: uuidv4(),
-            isCompleted: false
-        }
-        setTasks([...tasks, newTask])
-        setContent('')
+    const [titleTask, setTitleTask] = useState<string>('')
+    const [describeTask, setDescribeTask] = useState<string>('')
+    const createCurrentTitleTask = (title: string) => setTitleTask(title)
+    const createCurrentDescribeTask = (title: string) => setDescribeTask(title)
+
+    const getTasks = async () => {
+        const { data } = await api.get(`/tasks`);
+        setTasks(data.reverse());
+    };
+
+    const createTask = () => {
+        api.post('/tasks', {
+            title: titleTask,
+            description: describeTask
+        })
+
+        setTitleTask('')
+        getTasks()
     }
 
     const changeStatusTask = (taskTochange: task) => {
-        const newTask = tasks.map(task => {
-            if (task.id === taskTochange.id) {
-                return { ...task, isCompleted: !task.isCompleted };
-            }
-            return task;
-        });
-        setTasks(newTask);
+        // const newTask = tasks.map(task => {
+        //     if (task.id === taskTochange.id) {
+        //         return { ...task, isCompleted: !task.isCompleted };
+        //     }
+        //     return task;
+        // });
+        // setTasks(newTask);
     }
 
 
     const deleteTask = (taskToDelete: task) => {
-        const tasksWithoutDeleteOne = tasks.filter((task) => {
-            return task !== taskToDelete;
-        });
-        setTasks(tasksWithoutDeleteOne);
+
+        api.delete(`/tasks/${taskToDelete.id}`)
+        // getTasks()
+        // const tasksWithoutDeleteOne = tasks.filter((task) => {
+        //     return task !== taskToDelete;
+        // });
+        // setTasks(tasksWithoutDeleteOne);
     }
     return (
         <TodoListContext.Provider value={{
+            getTasks,
+            titleTask,
+            createCurrentTitleTask,
+            describeTask,
+            createCurrentDescribeTask,
             tasks,
             createTask,
-            content,
-            setContent,
-            refNewTask,
             changeStatusTask,
             deleteTask
         }}>
